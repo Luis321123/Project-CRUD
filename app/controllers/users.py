@@ -35,11 +35,11 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
     async def delete_user(self, user_uuid:str, session: Session):
         try:
             db_obj = {"active": False}
-            discipline_current = self.get(session, management_area_uuid)
-            self.update(db=session, db_obj=discipline_current, obj_in=db_obj)
-            self.remove(db=session, uuid=management_area_uuid)
+            user_currentt = self.get(session, user_uuid)
+            self.update(db=session, db_obj=user_currentt, obj_in=db_obj)
+            self.remove(db=session, uuid=user_uuid)
             
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(e)}")
 
-management_area_controller=ManagementAreaController(ManagementArea)
+user_controller=UserController(User)

@@ -16,3 +16,5 @@ class Carne(BaseModel):
     status = Column(String(255))
     time_get = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
+
+    notifications = relationship("Notification", back_populates="carne")
