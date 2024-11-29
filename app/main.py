@@ -7,9 +7,9 @@ settings = get_settings()
 
 def create_application():
     application = FastAPI(
-        title="MS Protocolos",
+        title=" Gestion de inventario",
         version="0.0.1",
-        description="Bienvenido a MS Protocolos.",
+        description="Bienvenido a Consuming.",
         docs_url="/docs", 
         swagger_ui_parameters={
             "defaultModelsExpandDepth": -1, 
