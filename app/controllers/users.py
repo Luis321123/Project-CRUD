@@ -42,4 +42,4 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(e)}")
 
-user_controller = UserController(User)
+management_area_controller=ManagementAreaController(ManagementArea)
