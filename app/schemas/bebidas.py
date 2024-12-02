@@ -12,7 +12,7 @@ class BebidasBase(BaseModel):
 class BebidasCreate(BebidasBase):
     pass
 
-class BeidasUpdate(BebidasBase):
+class BebidasUpdate(BebidasBase):
     pass
 
 class BebidasInDb(BebidasBase):

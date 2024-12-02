@@ -8,12 +8,12 @@ from app.models.User import User
 class UserController(CRUDBase[User, UserCreate, UserUpdate]):
     async def get_user(self, db:Session, uuid: str = None):
         if uuid:
-            user_uuid = db.query(self.model).filter(self.model.uuid == uuid).filter(self.model.deleted_at == None).order_by(self.model.acronym.asc()).first()
+            user_uuid = db.query(self.model).filter(self.model.uuid == uuid).filter(self.model.deleted_at == None).first()
             if not user_uuid:
                     raise HTTPException(status_code=404, detail="uuid of management_area not found.")
             return user_uuid
         else:
-            return db.query(self.model).filter(self.model.deleted_at == None).order_by(self.model.name.asc()).all()
+            return db.query(self.model).filter(self.model.deleted_at == None).order_by(self.model.username.asc()).all()
 
     async def create_user(self, data: UserCreate, session: Session):
         try:
@@ -28,7 +28,8 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
             if not user_current:
                 raise HTTPException(status_code=404, detail="uuid of user not found.")
             
-            self.update(db=session, db_obj=user_current, obj_in=data)
+            user_update=self.update(db=session, db_obj=user_current, obj_in=data)
+            return user_update
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(e)}")
     
