@@ -5,7 +5,6 @@ from app.schemas.bebidas import BebidasCreate,BebidasUpdate
 from app.services.base import CRUDBase
 from app.models.Bebida import Bebida
 from app.responses.bebidas import bebida_response_create
-
 class BebidaController(CRUDBase[Bebida, BebidasCreate, BebidasUpdate]):
     async def get_bebida(self, db:Session, uuid: str = None):
         if uuid:
@@ -22,7 +21,6 @@ class BebidaController(CRUDBase[Bebida, BebidasCreate, BebidasUpdate]):
             return bebida_response_create(bebida_current)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Hay un error: {str(e)}")
-
     
     async def update_bebida(self, data: BebidasUpdate, user_uuid: str, session: Session):
         try:

@@ -4,7 +4,6 @@ from fastapi import HTTPException
 from app.schemas.user import UserCreate, UserUpdate
 from app.services.base import CRUDBase
 from app.models.User import User
-
 class UserController(CRUDBase[User, UserCreate, UserUpdate]):
     async def get_user(self, db:Session, uuid: str = None):
         if uuid:
