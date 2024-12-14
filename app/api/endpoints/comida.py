@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Form
 from typing import Optional
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
@@ -15,16 +15,16 @@ async def get_comida(comida_uuid: Optional[str] = None,session: Session = Depend
     return disciplines
 
 @router.post('/comida', status_code=status.HTTP_201_CREATED)
-async def create_comida(data: ComidasCreate = str, session: Session = Depends(get_session)):
+async def create_comida(data: ComidasCreate = Form(...), session: Session = Depends(get_session)):
     bebida = await comida_controller.create_comida(data=data, session=session)
     return bebida
 
 @router.put('/comida', status_code=status.HTTP_200_OK)
-async def update_comida(comida_uuid: str, data:ComidasUpdate=str, session: Session = Depends(get_session)):
+async def update_comida(comida_uuid: str, data:ComidasUpdate= Form(...), session: Session = Depends(get_session)):
     update = await comida_controller.update_comida(data=data, comida_uuid=comida_uuid, session=session)
     return update
 
 @router.delete('/comida',status_code=status.HTTP_200_OK)
-async def delete_comida(uuid: str, session: Session = Depends(get_session)):
-    await comida_controller.delete_comida(disciplines_uuid=uuid, session=session)
+async def delete_comida(comida_uuid: str, session: Session = Depends(get_session)):
+    await comida_controller.delete_comida(comida_uuid=comida_uuid, session=session)
     return JSONResponse({'message': 'Your comida has been deleted successfully'})

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Form
 from typing import Optional
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
@@ -15,16 +15,16 @@ async def get_enlatado(enlatado_uuid: Optional[str] = None,session: Session = De
     return disciplines
 
 @router.post('/enlatado', status_code=status.HTTP_201_CREATED)
-async def create_enlatado(data: EnlatadosCreate = str, session: Session = Depends(get_session)):
+async def create_enlatado(data: EnlatadosCreate = Form(...), session: Session = Depends(get_session)):
     bebida = await enlatado_controller.create_enlatado(data=data, session=session)
     return bebida
 
 @router.put('/enlatado', status_code=status.HTTP_200_OK)
-async def update_enlatado(enlatado_uuid: str, data:EnlatadosUpdate=str, session: Session = Depends(get_session)):
+async def update_enlatado(enlatado_uuid: str, data:EnlatadosUpdate=Form(...), session: Session = Depends(get_session)):
     update = await enlatado_controller.update_enlatado(data=data, enlatado_uuid=enlatado_uuid, session=session)
     return update
 
 @router.delete('/enlatado',status_code=status.HTTP_200_OK)
-async def delete_enlatado(uuid: str, session: Session = Depends(get_session)):
-    await enlatado_controller.delete_enlatado(disciplines_uuid=uuid, session=session)
+async def delete_enlatado(enlatado_uuid: str, session: Session = Depends(get_session)):
+    await enlatado_controller.delete_enlatado(enlatado_uuid=enlatado_uuid, session=session)
     return JSONResponse({'message': 'Your comida has been deleted successfully'})

@@ -15,12 +15,12 @@ async def get_users(user_uuid: Optional[str] = None,session: Session = Depends(g
     return disciplines
 
 @router.post('/users', status_code=status.HTTP_201_CREATED)
-async def create_users(data: UserCreate = str, session: Session = Depends(get_session)):
+async def create_users(data: UserCreate = Form(...), session: Session = Depends(get_session)):
     user = await user_controller.create_user(data=data, session=session)
     return user
 
 @router.put('/user', status_code=status.HTTP_200_OK)
-async def update_users(user_uuid: str, data:UserUpdate=str, session: Session = Depends(get_session)):
+async def update_users(user_uuid: str, data:UserUpdate= Form(...), session: Session = Depends(get_session)):
     update = await user_controller.update_user(data=data, user_uuid=user_uuid, session=session)
     return update
 

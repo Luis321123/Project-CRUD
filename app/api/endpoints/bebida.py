@@ -15,16 +15,16 @@ async def get_bebida(bebida_uuid: Optional[str] = None,session: Session = Depend
     return disciplines
 
 @router.post('/bebida', status_code=status.HTTP_201_CREATED)
-async def create_bebida(data: BebidasCreate = str, session: Session = Depends(get_session)):
+async def create_bebida(data: BebidasCreate = Form(...), session: Session = Depends(get_session)):
     bebida = await bebida_controller.create_bebida(data=data, session=session)
     return bebida
 
 @router.put('/bebida', status_code=status.HTTP_200_OK)
-async def update_bebida(bebida_uuid: str, data:BebidasUpdate=str, session: Session = Depends(get_session)):
+async def update_bebida(bebida_uuid: str, data:BebidasUpdate=Form(...), session: Session = Depends(get_session)):
     update = await bebida_controller.update_bebida(data=data, bebida_uuid=bebida_uuid, session=session)
     return update
 
 @router.delete('/bebida',status_code=status.HTTP_200_OK)
-async def delete_bebida(uuid: str, session: Session = Depends(get_session)):
-    await bebida_controller.delete_bebida(disciplines_uuid=uuid, session=session)
+async def delete_bebida(bebida_uuid: str, session: Session = Depends(get_session)):
+    await bebida_controller.delete_bebida(bebida_uuid=bebida_uuid, session=session)
     return JSONResponse({'message': 'Your User has been deleted successfully'})
