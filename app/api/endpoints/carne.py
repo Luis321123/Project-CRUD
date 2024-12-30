@@ -28,4 +28,3 @@ async def update_carne(carne_uuid: str, data:CarnesUpdate=Form(...), session: Se
 async def delete_carne(carne_uuid: str, session: Session = Depends(get_session)):
     await carne_controller.delete_carne(carne_uuid=carne_uuid, session=session)
     return JSONResponse({'message': 'Your Carne has been deleted successfully'})
-    
