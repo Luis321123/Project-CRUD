@@ -2,11 +2,7 @@
 __pycache__/
 *.pyc
 
-# Ignorar dependencias de Node.js
-node_modules/
-
 # Ignorar archivos de logs
 *.log
 
 .env
-.env.local
